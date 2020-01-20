@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import { Category, CategoryWithRelations } from './category.model';
+import { Inventory } from './inventory.model';
 
 @model({settings: {strict: false}})
 export class Product extends Entity {
@@ -37,6 +39,26 @@ export class Product extends Entity {
   })
   details?: string;
 
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  createdAt: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  UpdatedAt: string;
+
+  @belongsTo(() => Category)
+  categoryId: string;
+
+  @hasMany(() => Inventory, {keyTo: 'inventoryId'})
+  inventories?: Inventory[];
+
   // Define well-known properties here
 
   // Indexer property to allow additional data
@@ -49,7 +71,7 @@ export class Product extends Entity {
 }
 
 export interface ProductRelations {
-  // describe navigational properties here
+  category?: CategoryWithRelations;
 }
 
 export type ProductWithRelations = Product & ProductRelations;

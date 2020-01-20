@@ -1,0 +1,11 @@
+{
+  "name": "mongo",
+  "connector": "mongodb",
+  "url": "mongodb+srv://danielkanangila:Oxy0mUiRwtWsiVPC@cluster0-xt3a6.mongodb.net/oldkora?retryWrites=true&w=majority",
+  "host": "cluster0-xt3a6.mongodb.net",
+  "port": 27017,
+  "user": "danielkanangila",
+  "password": "Oxy0mUiRwtWsiVPC",
+  "database": "oldkora",
+  "useNewUrlParser": true
+}

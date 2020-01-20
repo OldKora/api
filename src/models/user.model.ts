@@ -1,13 +1,29 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
+import { Order } from './order.model';
+import { UserCredentials, UserCredentialsWithRelations } from './user-credentials.model';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    strict: false,
+    indexes: {
+      uniqueEmail: {
+        keys: {
+          email: 1,
+        },
+        options: {
+          unique: true,
+        }
+      }
+    }
+  },
+})
 export class User extends Entity {
   @property({
     type: 'string',
     id: true,
     generated: true,
   })
-  id?: string;
+  userId?: string;
 
   @property({
     type: 'string',
@@ -37,6 +53,26 @@ export class User extends Entity {
   })
   phone?: string;
 
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  createdAt: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  UpdatedAt: string;
+
+  @hasMany(() => Order)
+  orders: Order[];
+
+  @hasOne(() => UserCredentials, {keyTo: 'userId'})
+  userCredentials: UserCredentials;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data
@@ -50,6 +86,7 @@ export class User extends Entity {
 
 export interface UserRelations {
   // describe navigational properties here
+  userCredentials?: UserCredentialsWithRelations;
 }
 
 export type UserWithRelations = User & UserRelations;

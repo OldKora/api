@@ -15,6 +15,20 @@ export class Order extends Entity {
   })
   total: number;
 
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  createdAt: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  UpdatedAt: string;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data

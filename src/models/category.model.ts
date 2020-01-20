@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import { Product } from './product.model';
 
 @model({settings: {strict: false}})
 export class Category extends Entity {
@@ -14,6 +15,23 @@ export class Category extends Entity {
     required: true,
   })
   name: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  createdAt: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  UpdatedAt: string;
+
+  @hasMany(() => Product, {keyTo: 'categoryId'})
+  products?: Product[];
 
   // Define well-known properties here
 
