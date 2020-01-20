@@ -12,7 +12,7 @@ export class ProductRepository extends DefaultCrudRepository<
 > {
   public readonly category: BelongsToAccessor<
     Category,
-    typeof Product.prototype.prototype,
+    typeof Product.prototype.productId
   >
   public readonly inventories: HasManyRepositoryFactory<
     Inventory,

@@ -27,7 +27,9 @@ export class UserCredentials extends Entity {
     type: 'date',
     required: true,
     generated: true
-
+  })
+  updatedAt: string;
+  
   @belongsTo(() => User)
   userId: string;
 

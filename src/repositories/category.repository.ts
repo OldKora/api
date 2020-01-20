@@ -11,7 +11,7 @@ export class CategoryRepository extends DefaultCrudRepository<
 > {
   public readonly products: HasManyRepositoryFactory<
     Product,
-    typeof Category.prototype.categoryId,
+    typeof Category.prototype.categoryId
   >
   constructor(
     @inject('datasources.mongo') dataSource: MongoDataSource,
