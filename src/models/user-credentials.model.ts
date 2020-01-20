@@ -16,6 +16,18 @@ export class UserCredentials extends Entity {
   })
   password: string;
 
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+  })
+  createdAt: string;
+
+  @property({
+    type: 'date',
+    required: true,
+    generated: true
+
   @belongsTo(() => User)
   userId: string;
 
