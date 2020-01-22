@@ -23,5 +23,6 @@ export class InventoryRepository extends DefaultCrudRepository<
       'product',
       productRepositoryGetter
     )
+    this.registerInclusionResolver('product', this.product.inclusionResolver);
   }
 }

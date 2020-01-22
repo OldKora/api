@@ -23,7 +23,7 @@ export class ProductRepository extends DefaultCrudRepository<
     @repository.getter('CategoryRepository')
     categoryRepositoryGetter: Getter<CategoryRepository>,
     @repository.getter('InventoryRepository')
-    getInventoryRepository: Getter<InventoryRepository>
+    inventoryRepositoryGetter: Getter<InventoryRepository>
   ) {
     super(Product, dataSource);
 
@@ -34,7 +34,7 @@ export class ProductRepository extends DefaultCrudRepository<
 
     this.inventories = this.createHasManyRepositoryFactoryFor(
       'inventories',
-      getInventoryRepository
+      inventoryRepositoryGetter
     );
 
     this.registerInclusionResolver('category', this.category.inclusionResolver);

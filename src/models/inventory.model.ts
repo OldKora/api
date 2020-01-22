@@ -47,7 +47,7 @@ export class Inventory extends Entity {
 
 export interface InventoryRelations {
   // describe navigational properties here
-  product?: ProductWithRelations;
+  //product?: ProductWithRelations;
 }
 
 export type InventoryWithRelations = Inventory & InventoryRelations;

@@ -56,7 +56,7 @@ export class Product extends Entity {
   @belongsTo(() => Category)
   categoryId: string;
 
-  @hasMany(() => Inventory, {keyTo: 'inventoryId'})
+  @hasMany(() => Inventory, {keyTo: 'productId'})
   inventories?: Inventory[];
 
   // Define well-known properties here

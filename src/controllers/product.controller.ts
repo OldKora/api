@@ -17,7 +17,7 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Product} from '../models';
+import {Product, Inventory} from '../models';
 import {ProductRepository} from '../repositories';
 
 export class ProductController {
@@ -170,5 +170,13 @@ export class ProductController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.productRepository.deleteById(id);
+  }
+
+  @post('/products/{id}/inventory')
+  async createInventory(
+    @param.path.string('id') id: string,
+    @requestBody() inventoryData: Inventory
+  ): Promise<Inventory> {
+    return this.productRepository.inventories(id).create(inventoryData);
   }
 }
