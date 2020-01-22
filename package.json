@@ -48,14 +48,16 @@
     "@loopback/context": "^1.25.1",
     "@loopback/core": "^1.12.1",
     "@loopback/openapi-v3": "^1.11.0",
+    "@loopback/repository": "^1.17.0",
     "@loopback/rest": "^1.25.1",
-    "@loopback/rest-explorer": "^1.4.7"
+    "@loopback/rest-explorer": "^1.4.7",
+    "loopback-connector-mongodb": "^4.2.0"
   },
   "devDependencies": {
     "@loopback/build": "^3.0.1",
-    "source-map-support": "^0.5.16",
     "@loopback/testlab": "^1.10.1",
     "@types/node": "^10.17.13",
-    "typescript": "~3.7.4"
+    "source-map-support": "^0.5.16",
+    "typescript": "^3.7.5"
   }
 }

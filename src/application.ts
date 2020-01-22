@@ -5,10 +5,13 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {RestApplication} from '@loopback/rest';
+import {RepositoryMixin} from '@loopback/repository';
 import path from 'path';
 import {MySequence} from './sequence';
 
-export class ApiApplication extends BootMixin(RestApplication) {
+export class ApiApplication extends BootMixin(
+  RepositoryMixin(RestApplication)
+) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
