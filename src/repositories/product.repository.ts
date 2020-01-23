@@ -21,9 +21,9 @@ export class ProductRepository extends DefaultCrudRepository<
   constructor(
     @inject('datasources.mongo') dataSource: MongoDataSource,
     @repository.getter('CategoryRepository')
-    categoryRepositoryGetter: Getter<CategoryRepository>,
+    protected categoryRepositoryGetter: Getter<CategoryRepository>,
     @repository.getter('InventoryRepository')
-    inventoryRepositoryGetter: Getter<InventoryRepository>
+    protected inventoryRepositoryGetter: Getter<InventoryRepository>
   ) {
     super(Product, dataSource);
 

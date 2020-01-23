@@ -1,6 +1,6 @@
 import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
 import { Category, CategoryWithRelations } from './category.model';
-import { Inventory } from './inventory.model';
+import { Inventory, InventoryWithRelations } from './inventory.model';
 
 @model({settings: {strict: false}})
 export class Product extends Entity {
@@ -56,7 +56,7 @@ export class Product extends Entity {
   @belongsTo(() => Category)
   categoryId: string;
 
-  @hasMany(() => Inventory, {keyTo: 'productId'})
+  @hasMany(() => Inventory)
   inventories?: Inventory[];
 
   // Define well-known properties here
@@ -72,6 +72,7 @@ export class Product extends Entity {
 
 export interface ProductRelations {
   category?: CategoryWithRelations;
+  inventories?: InventoryWithRelations[];
 }
 
 export type ProductWithRelations = Product & ProductRelations;
