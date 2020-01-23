@@ -17,13 +17,15 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Product} from '../models';
-import {ProductRepository} from '../repositories';
+import {Product, Inventory} from '../models';
+import {ProductRepository, InventoryRepository} from '../repositories';
 
 export class ProductController {
   constructor(
     @repository(ProductRepository)
     public productRepository : ProductRepository,
+    @repository(InventoryRepository)
+    public inventoryRepository : InventoryRepository
   ) {}
 
   @post('/products', {

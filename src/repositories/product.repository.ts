@@ -21,9 +21,9 @@ export class ProductRepository extends DefaultCrudRepository<
   constructor(
     @inject('datasources.mongo') dataSource: MongoDataSource,
     @repository.getter('CategoryRepository')
-    categoryRepositoryGetter: Getter<CategoryRepository>,
+    protected categoryRepositoryGetter: Getter<CategoryRepository>,
     @repository.getter('InventoryRepository')
-    getInventoryRepository: Getter<InventoryRepository>
+    protected inventoryRepositoryGetter: Getter<InventoryRepository>
   ) {
     super(Product, dataSource);
 
@@ -34,7 +34,7 @@ export class ProductRepository extends DefaultCrudRepository<
 
     this.inventories = this.createHasManyRepositoryFactoryFor(
       'inventories',
-      getInventoryRepository
+      inventoryRepositoryGetter
     );
 
     this.registerInclusionResolver('category', this.category.inclusionResolver);

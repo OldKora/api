@@ -16,12 +16,13 @@ export class InventoryRepository extends DefaultCrudRepository<
   constructor(
     @inject('datasources.mongo') dataSource: MongoDataSource,
     @repository.getter('ProductRepository')
-    productRepositoryGetter: Getter<ProductRepository>
+    protected productRepositoryGetter: Getter<ProductRepository>
   ) {
     super(Inventory, dataSource);
     this.product = this.createBelongsToAccessorFor(
       'product',
       productRepositoryGetter
     )
+    this.registerInclusionResolver('product', this.product.inclusionResolver);
   }
 }
