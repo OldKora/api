@@ -53,12 +53,8 @@ export class Product extends Entity {
   })
   UpdatedAt: string;
 
-  @belongsTo(() => Category)
-  categoryId: string;
-
   @hasMany(() => Inventory)
-  inventories?: Inventory[];
-
+  inventories: Inventory[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
@@ -71,8 +67,7 @@ export class Product extends Entity {
 }
 
 export interface ProductRelations {
-  category?: CategoryWithRelations;
-  inventories?: InventoryWithRelations[];
+  inventories?: Inventory[];
 }
 
 export type ProductWithRelations = Product & ProductRelations;

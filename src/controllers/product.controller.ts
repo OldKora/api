@@ -17,7 +17,7 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Product, Inventory} from '../models';
+import {Product, Inventory, ProductWithRelations } from '../models';
 import {ProductRepository, InventoryRepository} from '../repositories';
 
 export class ProductController {
@@ -25,7 +25,7 @@ export class ProductController {
     @repository(ProductRepository)
     public productRepository : ProductRepository,
     @repository(InventoryRepository)
-    public inventoryRepository : InventoryRepository
+    public inventoryRepository: InventoryRepository
   ) {}
 
   @post('/products', {
@@ -172,5 +172,25 @@ export class ProductController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.productRepository.deleteById(id);
+  }
+
+  @get('/products/all', {
+    responses: {
+      '200': {
+        description: 'Array of Product model instances',
+      }
+    }
+  })
+  async findAll() {
+    const products = (await this.productRepository.find());
+    const inventories = (await this.inventoryRepository.find());
+
+    return products.map(product => {
+       
+      return {
+        ...product,
+        inventories: inventories.filter(inventory => inventory.productId == product.productId)
+      }
+    })
   }
 }

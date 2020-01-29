@@ -2,42 +2,23 @@ import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyRepositoryF
 import {Product, ProductRelations, Category, Inventory} from '../models';
 import {MongoDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
-import { CategoryRepository } from './category.repository';
-import { InventoryRepository } from './inventory.repository';
+import {InventoryRepository} from './inventory.repository';
 
 export class ProductRepository extends DefaultCrudRepository<
   Product,
   typeof Product.prototype.productId,
   ProductRelations
 > {
-  public readonly category: BelongsToAccessor<
-    Category,
-    typeof Product.prototype.productId
-  >
-  public readonly inventories: HasManyRepositoryFactory<
-    Inventory,
-    typeof Product.prototype.productId
-  >
+
+  public readonly inventories: HasManyRepositoryFactory<Inventory, typeof Product.prototype.productId>;
+
   constructor(
-    @inject('datasources.mongo') dataSource: MongoDataSource,
-    @repository.getter('CategoryRepository')
-    protected categoryRepositoryGetter: Getter<CategoryRepository>,
-    @repository.getter('InventoryRepository')
-    protected inventoryRepositoryGetter: Getter<InventoryRepository>
-  ) {
+    @inject('datasources.mongo') dataSource: MongoDataSource, @repository.getter('InventoryRepository') protected inventoryRepositoryGetter: Getter<InventoryRepository>,
+    @repository(InventoryRepository)
+    protected inventoryRepository: InventoryRepository,
+    ) {
     super(Product, dataSource);
-
-    this.category = this.createBelongsToAccessorFor(
-      'category',
-      categoryRepositoryGetter
-    );
-
-    this.inventories = this.createHasManyRepositoryFactoryFor(
-      'inventories',
-      inventoryRepositoryGetter
-    );
-
-    this.registerInclusionResolver('category', this.category.inclusionResolver);
+    this.inventories = this.createHasManyRepositoryFactoryFor('inventories', inventoryRepositoryGetter,);
     this.registerInclusionResolver('inventories', this.inventories.inclusionResolver);
   }
 }

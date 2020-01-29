@@ -7,4 +7,5 @@ export * from './shopping-cart-item.controller';
 export * from './shopping-cart.controller';
 export * from './user-credentials.controller';
 export * from './user.controller';
-export * from './product-inventories-controller.controller';
+export * from './product-inventory.controller';
+export * from './inventory-product.controller';

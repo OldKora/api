@@ -30,9 +30,6 @@ export class Category extends Entity {
   })
   UpdatedAt: string;
 
-  @hasMany(() => Product)
-  products?: Product[];
-
   // Define well-known properties here
 
   // Indexer property to allow additional data
@@ -45,8 +42,6 @@ export class Category extends Entity {
 }
 
 export interface CategoryRelations {
-  // describe navigational properties here
-  products?: ProductWithRelations[];
 }
 
 export type CategoryWithRelations = Category & CategoryRelations;
