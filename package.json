@@ -1,63 +1,35 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "api",
-  "keywords": [
-    "loopback-application",
-    "loopback"
-  ],
+  "description": "",
   "main": "index.js",
-  "engines": {
-    "node": ">=8.9"
-  },
   "scripts": {
-    "build": "lb-tsc",
-    "build:watch": "lb-tsc --watch",
-    "clean": "lb-clean dist *.tsbuildinfo",
-    "lint": "npm run prettier:check",
-    "lint:fix": "npm run prettier:fix",
-    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write",
-    "pretest": "npm run clean && npm run build",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-    "posttest": "npm run lint",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "docker:build": "docker build -t api .",
-    "docker:run": "docker run -p 3000:3000 -d api",
-    "migrate": "node ./dist/migrate",
-    "prestart": "npm run build",
-    "start": "node -r source-map-support/register .",
-    "prepublishOnly": "npm run test"
+    "start": "nodemon --exec babel-node bootstrap.js --ignore loopback/",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/OldKora/api.git"
   },
+  "keywords": [],
   "author": "",
-  "license": "",
-  "files": [
-    "README.md",
-    "index.js",
-    "index.d.ts",
-    "dist",
-    "src",
-    "!*/__tests__"
-  ],
-  "dependencies": {
-    "@loopback/boot": "^1.7.2",
-    "@loopback/context": "^2.0.0",
-    "@loopback/core": "^1.12.2",
-    "@loopback/openapi-v3": "^1.12.0",
-    "@loopback/repository": "^1.18.0",
-    "@loopback/rest": "^1.26.0",
-    "@loopback/rest-explorer": "^1.4.8",
-    "loopback-connector-mongodb": "^4.2.0"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OldKora/api/issues"
   },
-  "devDependencies": {
-    "@loopback/build": "^3.1.0",
-    "@loopback/testlab": "^1.10.2",
-    "@types/node": "^10.17.13",
-    "source-map-support": "^0.5.16",
-    "typescript": "~3.7.5"
+  "homepage": "https://github.com/OldKora/api#readme",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-syntax-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "knex": "^0.20.10",
+    "nodemon": "^2.0.2"
   }
 }

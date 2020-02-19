@@ -1,0 +1,5 @@
+{
+    "name": "mongo",
+    "connector": "mongodb",
+    "url": "mongodb+srv://danielkanangila:Oxy0mUiRwtWsiVPC@cluster0-xt3a6.mongodb.net/oldkora?retryWrites=true&w=majority"
+}
