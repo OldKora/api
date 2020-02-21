@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {                  /* Enable incremental compilation */
+    "module": "commonjs",                 /* Generates a sourcemap for each corresponding '.d.ts' file. */
+    "esModuleInterop": true,  
+    "allowSyntheticDefaultImports": true,                 
+    "target": "es6",                
+    "noImplicitAny": true,         
+    "moduleResolution": "node",
+    "sourceMap": true,                         
+    "outDir": "dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/*",
+        "node_modules/@types"
+      ]
+    },       
+    "experimentalDecorators": true,          
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "loopback"
+  ]
+}

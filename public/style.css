@@ -1,0 +1,11 @@
+
+.error {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.error-description {
+    background-color: #ccc;
+    padding: 30px 16px;
+    border-radius: 5px;
+}
