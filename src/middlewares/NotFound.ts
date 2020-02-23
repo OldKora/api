@@ -4,12 +4,12 @@ const notFound = (req: Request, res: Response, next: any) => {
     res.status(404);
 
     const error = {
-        title: "Resource Not found",
-            description: `We can't reach ${req.url} with method: ${req.method}`
+        name: "Resource Not found",
+        message: `We can't reach ${req.url} with method: ${req.method}`
     }
 
     if (req.accepts('html')) {
-        res.render('errors/not-found', { error });
+        res.render('errors/404', { error });
         return;
     }
 
@@ -18,7 +18,7 @@ const notFound = (req: Request, res: Response, next: any) => {
         return;
     }
 
-    res.type('text').send(error.title)
+    res.type('text').send(error.message)
 }
 
 export default notFound;

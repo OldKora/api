@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Controller } from '../decorators/router/Controller';
-import { Get, Post, Put, Delete } from '../decorators/router';
+import { Controller } from '../router/Controller';
+import { Get, Post, Put, Delete } from '../router';
 
 @Controller('/users')
 export default class UserController {

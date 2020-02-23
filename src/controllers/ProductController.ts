@@ -1,19 +1,23 @@
 import { Request, Response } from 'express';
-import { Controller } from './../decorators/router/Controller';
-import { Route, Get, Post, Put, Delete } from './../decorators/router';
+import { Controller } from '../router/Controller';
+import { Route, Get, Post, Put, Delete } from '../router';
+import BaseController from '../router/BaseController';
 
 @Controller('/products')
-export default class ProductController {
+export default class ProductController extends BaseController {
 
     @Post('/')
-    public create(req: Request, res: Response) {
+    public create(req?: Request, res?: Response) {
         return res.send({data: req.body})
     }
 
     @Get('/')
-    public read(req: Request, res: Response) {
+    public read(req?: Request, res?: Response) {
         //return res.status(200).json({"message": "Products"})
-        res.render('home/index', {
+        // return this.render('home/index', {
+        //     data: '<p>Html from server</p>'
+        // )
+        this.render(res, 'home/index', {
             data: '<p>Html from server</p>'
         });
     }
@@ -22,11 +26,11 @@ export default class ProductController {
         path: '/:id',
         method: 'put',
         paramsType: [
-            {name: 'id', type: 'string' }
+            {name: 'id', type: 'number' }
         ]
     })
     public update(req: Request, res: Response) {
-        return res.send({
+        res.send({
             id: req.params.id,
             data: req.body
         })
@@ -40,7 +44,13 @@ export default class ProductController {
         })
     }
 
-    @Get('/:id')
+    @Route({
+        path: '/:id',
+        method: 'get',
+        paramsType: [
+            {name: 'id', type: 'number'}
+        ]
+    })
     public findOne(req: Request, res: Response) {
         return res.status(200).json({params: req.params})
     }

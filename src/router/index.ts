@@ -13,7 +13,7 @@ export const Route = (options: RouteInterface): MethodDecorator => {
             requestMethod: options.method,
             path: options.path,
             methodName: propertyKey,
-            params: options.paramsType
+            paramsType: options.paramsType
         });
         Reflect.defineMetadata('routes', routes, target.constructor);
     };

@@ -21,6 +21,7 @@ const app = new App({
         OrderController,
         UserController,
     ],
+    apiControllers: [],
     middleWares: [
         logger
     ]
