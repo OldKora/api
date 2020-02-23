@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Controller } from '../../router/Controller';
-import { Route, Get, Post, Put, Delete } from '../../router';
+import { Controller } from './../../lib/router/Controller';
+import { Get, Post, Route, Delete } from './../../lib/router';
 
 @Controller('/products')
 export default class ProductController {

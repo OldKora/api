@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { Controller } from './../router/Controller';
-import { Route, Get, Post, Put, Delete } from './../router';
-import BaseController from './../router/BaseController';
+import { Controller } from './../lib/router/Controller';
+import { Get } from './../lib/router';
+import BaseController from './../lib/router/BaseController';
 
 @Controller('')
 export default class HomeController extends BaseController {

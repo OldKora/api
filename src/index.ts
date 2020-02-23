@@ -1,6 +1,6 @@
 import App from './app';
 import config from './config';
-import logger from './middlewares/logger';
+import logger from './lib/middlewares/logger';
 
 import ProductController from './controllers/api/ProductController';
 import CategoryController from './controllers/api/CategoryController';
