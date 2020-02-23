@@ -1,8 +1,6 @@
 import 'reflect-metadata';
-import express from 'express';
+import express, { Router } from 'express';
 import { Application } from 'express';
-import fs from 'fs';
-import path from 'path';
 import { RouteDefinition } from './router/RouteDefinition';
 import notFound from './middlewares/NotFound';
 import InternalServerErrorHandler from './middlewares/InternalServerErrorHandler';
@@ -14,11 +12,10 @@ class App {
     public host: string;
     public version: string;
 
-    constructor(appInit: { port: any; host: string; version: string; middleWares: any; controllers: any; apiControllers: any}) {
+    constructor(appInit: { port: any; host: string; middleWares: any; controllers: any; apiControllers: any}) {
         this.app = express();
         this.port = appInit.port;
         this.host = appInit.host;
-        this.version = appInit.version;
 
         // Default middle wares initialization
         this.app.use(express.json());
@@ -45,38 +42,43 @@ class App {
         });
     }
 
-    private routes(controllers: { forEach: (arg0: (controller: any) => void) => void; }) {
-        // Get each controller
-        const router = express.Router();
-        controllers.forEach(controller => {
-            // Create new instance of controller
-            const instance = new controller();
-            // Retrieve controller decorator param
-            const prefix = Reflect.getMetadata('prefix', controller);
-            // Retrieve all method decorator as route
-            const routes: RouteDefinition[] = Reflect.getMetadata('routes', controller);
-            // Create a request for each route in the controller
-            // api route def /api/${this.version}${prefix}${route.path}
-            routes.forEach(route => {
-                router[route.requestMethod](`${prefix}${route.path}`, (req: express.Request, res: express.Response, next) => {
-                    // Check if request param type corresponding to expected param types
-                    // if request param type equal to expected param type them call the corresponding method in the controller
-                    if (route.paramsType) {
-                        route.paramsType.forEach(param => {
-                            try {
-                                // using parse to check if route param type equal to request param type
-                                parseParam(param.name, req.params[param.name], param.type);
-                                // call the corresponding method
-                                instance[route.methodName](req, res);
-                            } catch(e) { next({name: "RequestTypeException", message: e.message + ` On route [${prefix}], method [${route.methodName.toString()}]`, trace: e.stack}) }
-                        })
-                    } else {
-                        instance[route.methodName](req, res);
-                    }
-                })
+    private routes(controllers: ControllersArgsInterface[]) {
+        // Load routes from controllers;
+        controllers.forEach(item => {
+            item.controllers.forEach(controller => this.loadRoutes(controller, item.prefix));
+            console.log(this.app._router.stack);
+        });
+    }
+
+    private loadRoutes(controller: any, routePrefix: string) :void {
+
+        // Create new instance of controller
+        const instance = new controller();
+        // Retrieve controller decorator param
+        const prefix = Reflect.getMetadata('prefix', controller);
+        // Retrieve all method decorator as route
+        const routes: RouteDefinition[] = Reflect.getMetadata('routes', controller);
+        // Create a request for each route in the controller
+        // api route def /api/${this.version}${prefix}${route.path}
+        routes.forEach(route => {
+            const path = `${routePrefix}${prefix}${route.path}`;
+            this.app[route.requestMethod](path, (req: express.Request, res: express.Response, next) => {
+                // Check if request param type corresponding to expected param types
+                // if request param type equal to expected param type them call the corresponding method in the controller
+                if (route.paramsType) {
+                    route.paramsType.forEach(param => {
+                        try {
+                            // using parse to check if route param type equal to request param type
+                            parseParam(param.name, req.params[param.name], param.type);
+                            // call the corresponding method
+                            instance[route.methodName](req, res);
+                        } catch(e) { next({name: "RequestTypeException", message: e.message + ` On route [${prefix}], method [${route.methodName.toString()}]`, trace: e.stack}) }
+                    })
+                } else {
+                    instance[route.methodName](req, res);
+                }
             });
         });
-        this.app.use(router);
     }
 
     private assets(): void {
@@ -93,6 +95,11 @@ class App {
             console.log(`App listening on the ${this.host}:${this.port}`);
         })
     }
+}
+
+interface ControllersArgsInterface {
+    controllers: any[],
+    prefix: string,
 }
 
 export default App;

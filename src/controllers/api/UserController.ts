@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { Controller } from '../router/Controller';
-import { Get, Post, Put, Delete } from '../router';
+import { Controller } from '../../router/Controller';
+import { Get, Post, Put, Delete } from '../../router';
 
-@Controller('/orders')
-export default class OrderController {
+@Controller('/users')
+export default class UserController {
     @Post('/')
     public create(req: Request, res: Response) {
         return res.send({data: req.body})
@@ -11,7 +11,7 @@ export default class OrderController {
 
     @Get('/')
     public read(req: Request, res: Response) {
-        return res.status(200).json({"message": "Orders"})
+        return res.status(200).json({"message": "Users"})
     }
 
     @Put('/:id')

@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
-import { Controller } from '../router/Controller';
-import { Route, Get, Post, Put, Delete } from '../router';
-import BaseController from '../router/BaseController';
+import { Controller } from '../../router/Controller';
+import { Route, Get, Post, Put, Delete } from '../../router';
 
 @Controller('/products')
-export default class ProductController extends BaseController {
+export default class ProductController {
 
     @Post('/')
     public create(req?: Request, res?: Response) {
@@ -13,13 +12,7 @@ export default class ProductController extends BaseController {
 
     @Get('/')
     public read(req?: Request, res?: Response) {
-        //return res.status(200).json({"message": "Products"})
-        // return this.render('home/index', {
-        //     data: '<p>Html from server</p>'
-        // )
-        this.render(res, 'home/index', {
-            data: '<p>Html from server</p>'
-        });
+        return res.status(200).json({"message": "Products"});
     }
 
     @Route({
