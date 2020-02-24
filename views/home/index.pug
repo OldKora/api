@@ -6,13 +6,11 @@ block styles
 block scripts
     script.
         window.assets = {
-            name: !{JSON.stringify(name)},
+            data: !{JSON.stringify(data)},
         }
     each script in scripts
         script(src='' + script)
 
 block content
-    h1.title Welcome to old kora!
     div#root !{markup}
-    p #{name}
 

@@ -23,12 +23,12 @@ const app = new App({
         {
             prefix: '/api/v1',
             controllers: [
-                ProductController,
-                CategoryController,
-                CustomerController,
-                InventoryController,
-                OrderController,
-                UserController,
+                // ProductController,
+                // CategoryController,
+                // CustomerController,
+                // InventoryController,
+                // OrderController,
+                // UserController,
             ]
 
         }

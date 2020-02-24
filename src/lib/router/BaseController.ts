@@ -2,24 +2,19 @@ import { Response } from 'express';
 import { ReactDataInterface } from './../ServerRender';
 
 export default class BaseController {
-    private response: Response;
     private frontApp: ReactDataInterface;
 
-    protected render(res: Response, templatePath: string, data?: any): void {
+    protected render(res: Response, templatePath?: string, data?: any): void {
 
         if (this.frontApp) {
             const markup = this.frontApp.renderAsString(
                 this.frontApp.App,
                 data
             );
-            res.render(this.frontApp.layout, {markup, ...data, ...this.frontApp.statics})
+            res.render(this.frontApp.layout, {markup, ...this.frontApp.statics, data})
         } else {
             res.render(templatePath, data);
         }
-    }
-
-    public setResponse(res: Response): void {
-        this.response = res;
     }
 
     public setFrontApp(frontApp: any): any {

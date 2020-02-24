@@ -63,6 +63,7 @@ class Application {
         }
         // Retrieve all method decorator as route
         const routes: RouteDefinition[] = Reflect.getMetadata('routes', controller);
+
         // Create a request for each route in the controller
         // api route def /api/${this.version}${prefix}${route.path}
         routes.forEach(route => {
@@ -70,18 +71,20 @@ class Application {
             this.app[route.requestMethod](path, (req: express.Request, res: express.Response, next) => {
                 // Check if request param type corresponding to expected param types
                 // if request param type equal to expected param type them call the corresponding method in the controller
-                if (route.paramsType) {
-                    route.paramsType.forEach(param => {
-                        try {
-                            // using parse to check if route param type equal to request param type
-                            parseParam(param.name, req.params[param.name], param.type);
-                            // call the corresponding method
-                            instance[route.methodName](req, res);
-                        } catch(e) { next({name: "RequestTypeException", message: e.message + ` On route [${prefix}], method [${route.methodName.toString()}]`, trace: e.stack}) }
-                    })
-                } else {
-                    instance[route.methodName](req, res);
-                }
+                try {
+                    if (route.paramsType) {
+                        route.paramsType.forEach(param => {
+                            try {
+                                // using parse to check if route param type equal to request param type
+                                parseParam(param.name, req.params[param.name], param.type);
+                                // call the corresponding method
+                                instance[route.methodName](req, res);
+                            } catch(e) { next({name: "RequestTypeException", message: e.message + ` On route [${prefix}], method [${route.methodName.toString()}]`, trace: e.stack}) }
+                        })
+                    } else {
+                        instance[route.methodName](req, res);
+                    }
+                } catch(e) { next(e) }
             });
         });
     }
