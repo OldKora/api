@@ -8,7 +8,10 @@
     "build": "tsc -p .",
     "prestart": "npm run build",
     "start": "ts-node dist/index.js",
-    "dev": "nodemon",
+    "start:dev": "nodemon",
+    "start:react": "parcel views/react-src/index.html",
+    "parcel:build": "parcel build views/react-src/index.html --out-dir public/statics",
+    "build:react": "rm -rf public/statics && npm run parcel:build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,14 +29,24 @@
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
     "@types/node": "^13.7.4",
+    "@types/react": "^16.9.22",
+    "@types/react-dom": "^16.9.5",
+    "axios": "^0.19.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.20.10",
     "nodemon": "^2.0.2",
     "pug": "^2.0.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "reflect-metadata": "^0.1.13",
+    "reload": "^3.0.4",
     "ts-node": "^8.6.2",
     "tslint": "^6.0.0",
     "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.25.0"
   }
 }

@@ -12,7 +12,7 @@ class Application {
     public host: string;
     public version: string;
 
-    constructor(appInit: { port: any; host: string; middleWares: any; controllers: any; apiControllers: any}) {
+    constructor(appInit: ArgsInterface) {
         this.app = express();
         this.port = appInit.port;
         this.host = appInit.host;
@@ -46,7 +46,7 @@ class Application {
         // Load routes from controllers;
         controllers.forEach(item => {
             item.controllers.forEach(controller => this.loadRoutes(controller, item.prefix));
-            console.log(this.app._router.stack);
+            // console.log(this.app._router.stack);
         });
     }
 
@@ -56,6 +56,11 @@ class Application {
         const instance = new controller();
         // Retrieve controller decorator param
         const prefix = Reflect.getMetadata('prefix', controller);
+        // Get react application from controller
+        const react = Reflect.getMetadata('react', controller);
+        if (react) {
+            instance.setFrontApp(react);
+        }
         // Retrieve all method decorator as route
         const routes: RouteDefinition[] = Reflect.getMetadata('routes', controller);
         // Create a request for each route in the controller
@@ -100,6 +105,13 @@ class Application {
 interface ControllersArgsInterface {
     controllers: any[],
     prefix: string,
+}
+
+export interface ArgsInterface {
+    port: any;
+    host: string;
+    middleWares: any;
+    controllers: any;
 }
 
 export default Application;

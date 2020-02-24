@@ -8,7 +8,6 @@
     "moduleResolution": "node",
     "sourceMap": true,                         
     "outDir": "dist",
-    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
       "*": [
@@ -17,13 +16,14 @@
       ]
     },       
     "experimentalDecorators": true,          
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "jsx": "react"
   },
   "include": [
     "**/*"
   ],
   "exclude": [
     "node_modules",
-    "loopback"
+    "loopback",
   ]
 }

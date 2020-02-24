@@ -33,10 +33,9 @@ const app = new App({
 
         }
     ],
-    apiControllers: [],
     middleWares: [
         logger
     ]
-})
+});
 
 app.listen();

@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import Application from './lib/Application';
+import Application, { ArgsInterface } from './lib/Application';
 
 class App extends Application {
 
-    constructor(appInit: { port: any; host: string; middleWares: any; controllers: any; apiControllers: any}) {
+    constructor(appInit: ArgsInterface) {
         super(appInit);
     }
 }

@@ -1,5 +1,18 @@
 extends ../layout.pug
 
+block styles
+    each style in styles
+        link(rel="stylesheet", href='' + style)
+block scripts
+    script.
+        window.assets = {
+            name: !{JSON.stringify(name)},
+        }
+    each script in scripts
+        script(src='' + script)
+
 block content
     h1.title Welcome to old kora!
-    p !{data}
+    div#root !{markup}
+    p #{name}
+
