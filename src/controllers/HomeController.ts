@@ -1,5 +1,3 @@
-import { Request, Response } from 'express';
-import { react } from './../lib/ssr';
 import App from './../../views/react-src/App';
 
 import {
@@ -13,39 +11,27 @@ import {
     layout: 'home/index',
     frontApp: App,
 })
-@react({
-    App,
-    layout: 'home/index'
-})
 export default class HomeController {
 
-    @get('/', {
-        template: 'home/index'
-    })
+    @get('/')
     public index() {
         return {
             name: 'Evelyne Nzimeyera',
         }
-        // this.render(res, null, {
-        //     name: 'Evelyne Nzimenyera'
-        // });
     }
 
     @get('/about', {
-        template: 'home/index'
+        paramsType: [
+            {name: 'name', type: "string"}
+        ]
     })
-    public about(req?: Request, res?: Response) {
+    public about(req: Express.Request) {
+
         return {
             about: {
                 pageTitle: 'About Us',
                 text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil soluta, architecto deleniti ipsum possimus vel asperiores at! Suscipit molestiae nihil autem, provident magni sapiente commodi, repudiandae, repellendus culpa neque sequi.'
             }
         }
-        // this.render(res, null, {
-        //    about: {
-        //         pageTitle: 'About',
-        //         text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil soluta, architecto deleniti ipsum possimus vel asperiores at! Suscipit molestiae nihil autem, provident magni sapiente commodi, repudiandae, repellendus culpa neque sequi.',
-        //    }
-        // })
     }
 }
