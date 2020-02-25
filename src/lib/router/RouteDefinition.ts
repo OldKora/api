@@ -2,13 +2,18 @@ export interface RouteDefinition {
     path: string;
     requestMethod: 'get' | 'post' | 'delete' | 'put';
     methodName: string | symbol;
-    paramsType?: ParamsType[];
+    options: RouteOptionsDefinition;
 }
 
 export interface RouteInterface {
     path: string;
     method: 'get' | 'post' | 'delete' | 'put';
     paramsType?: ParamsType[]
+}
+
+export interface RouteOptionsDefinition {
+    template?: string;
+    paramsType?: ParamsType[];
 }
 
 export interface ParamsType {

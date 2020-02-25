@@ -3,7 +3,7 @@ import ReactDomServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Request } from 'express';
 
-const RenderReactDomAsString = (App: any, req: Request, assets?: any) => {
+export const RenderReactDomAsString = (App: any, req: Request, assets?: any) => {
 
    return ReactDomServer.renderToString(
        <StaticRouter location={req.url} context={{}}>
@@ -11,5 +11,3 @@ const RenderReactDomAsString = (App: any, req: Request, assets?: any) => {
        </StaticRouter>
     );
 };
-
-export default RenderReactDomAsString;

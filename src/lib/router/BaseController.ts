@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { ReactDataInterface } from './../ServerRender';
+import { ReactDataInterface } from './../ssr';
 
-export default class BaseController {
+export class BaseController {
     private frontApp: ReactDataInterface;
 
     protected render(res: Response, templatePath?: string, data?: any): void {

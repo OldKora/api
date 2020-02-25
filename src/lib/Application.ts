@@ -5,6 +5,9 @@ import { RouteDefinition } from './router/RouteDefinition';
 import notFound from './middlewares/NotFound';
 import InternalServerErrorHandler from './middlewares/InternalServerErrorHandler';
 import { parseParam } from './router/RouteDefinition';
+import { ReactDataInterface, getStaticsFiles, renderAsString } from './ssr';
+import { BuildRoutes } from './router';
+import { ApplicationControllersArgsDefinition } from './interfaces';
 
 class Application {
     public app: BaseApplication;
@@ -42,7 +45,8 @@ class Application {
         });
     }
 
-    private routes(controllers: ControllersArgsInterface[]) {
+    private routes(controllers: ApplicationControllersArgsDefinition[]) {
+        const router: any = new BuildRoutes(controllers);
         // Load routes from controllers;
         controllers.forEach(item => {
             item.controllers.forEach(controller => this.loadRoutes(controller, item.prefix));
@@ -57,30 +61,34 @@ class Application {
         // Retrieve controller decorator param
         const prefix = Reflect.getMetadata('prefix', controller);
         // Get react application from controller
-        const react = Reflect.getMetadata('react', controller);
-        if (react) {
-            instance.setFrontApp(react);
-        }
+        const react: ReactDataInterface = Reflect.getMetadata('react', controller);
         // Retrieve all method decorator as route
         const routes: RouteDefinition[] = Reflect.getMetadata('routes', controller);
-
         // Create a request for each route in the controller
         // api route def /api/${this.version}${prefix}${route.path}
         routes.forEach(route => {
-            const path = `${routePrefix}${prefix}${route.path}`;
+            const path = `${routePrefix}${prefix ? prefix : ''}${route.path}`;
             this.app[route.requestMethod](path, (req: express.Request, res: express.Response, next) => {
                 // Check if request param type corresponding to expected param types
                 // if request param type equal to expected param type them call the corresponding method in the controller
                 try {
-                    if (route.paramsType) {
-                        route.paramsType.forEach(param => {
+                    if (route.options) {
+                        route.options?.paramsType?.forEach(param => {
                             try {
                                 // using parse to check if route param type equal to request param type
                                 parseParam(param.name, req.params[param.name], param.type);
                                 // call the corresponding method
-                                instance[route.methodName](req, res);
+                                //res.send(rou)
                             } catch(e) { next({name: "RequestTypeException", message: e.message + ` On route [${prefix}], method [${route.methodName.toString()}]`, trace: e.stack}) }
-                        })
+                        });
+                        const data = instance[route.methodName]();
+                        const markup = renderAsString(
+                            react.App,
+                            req,
+                            'ssr-react',
+                            data
+                        );
+                        res.render(route.options.template, {markup, data, ...getStaticsFiles()});
                     } else {
                         instance[route.methodName](req, res);
                     }
@@ -103,11 +111,6 @@ class Application {
             console.log(`App listening on the ${this.host}:${this.port}`);
         })
     }
-}
-
-interface ControllersArgsInterface {
-    controllers: any[],
-    prefix: string,
 }
 
 export interface ArgsInterface {

@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import "reflect-metadata";
-import RenderReactDomAsString from './RenderReactDomAsString';
+import { RenderReactDomAsString } from './../';
 
-const __STATICS_DIR = path.resolve(__dirname, '..', '..', '..', 'public', 'statics');
+const __STATICS_DIR = path.resolve(__dirname, '..', '..', '..', '..', 'public', 'statics');
 
-export const React = (args: {App: any; layout: string;}): ClassDecorator => {
+export const react = (args: {App: any; layout: string;}): ClassDecorator => {
     return (target: any) => {
         const data: ReactDataInterface = {
             App: args.App,
